@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWASP Top 10 & VAPT Assessment | CyberSec ITC India</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional inline styles for new sections not covered by original styles.css */
+        .section-padding { padding: 80px 0; }
+        .text-muted { color: #718096; font-size: 0.9rem; }
+        
+        .faq-item {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .faq-item h4 {
+            color: #0056b3;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .owasp-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 1100px) {
+            .owasp-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .owasp-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .owasp-grid { grid-template-columns: 1fr; }
+        }
+        .owasp-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+        .owasp-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(99, 179, 237, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .owasp-badge {
+            background: rgba(229, 62, 62, 0.2);
+            color: #fc8181;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid rgba(229, 62, 62, 0.3);
+        }
+        .owasp-content h4 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            line-height: 1.3;
+        }
+        .owasp-content p {
+            color: #cbd5e0;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .timeline-step {
+            background: #fff;
+            padding: 30px;
+            border-top: 5px solid #0056b3;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .timeline-step h3 { color: #0056b3; margin-bottom: 15px; font-size: 1.3rem; }
+        .timeline-step ul { padding-left: 20px; color: #4a5568; line-height: 1.6; margin-top: 15px; }
+        .timeline-step ul li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo" style="display: flex; align-items: center; gap: 15px;">
+                <img src="itclogo.png" alt="ITC India Logo" class="logo-img" style="height: 50px;">
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <span style="font-size: 1.5rem; font-weight: 800; background: linear-gradient(90deg, #0056b3, #3182ce); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; letter-spacing: -0.5px;">CyberSec</span>
+                    <span style="font-size: 0.72rem; font-weight: 700; color: #4a5568; text-transform: uppercase; letter-spacing: 1px;">IS Division of ITC INDIA</span>
+                </div>
+            </div>
+            
+            <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+
+            <nav id="mainNav">
+                <a href="#methodology">Methodology</a>
+                <a href="#owasp">OWASP Top 10</a>
+                <a href="#deliverables">Deliverables</a>
+                <a href="#contact" class="btn btn-primary">Request a VAPT Assessment</a>
+            </nav>
+        </div>
+    </header>
+
+    <script>
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+        // Close menu when a link is clicked
+        document.querySelectorAll('#mainNav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mainNav').classList.remove('active');
+            });
+        });
+    </script>
+
+    <!-- 1. Hero Section -->
+    <section class="hero" style="position: relative; overflow: hidden; padding: 100px 0 120px;">
+        <!-- Glowing Orbs -->
+        <div style="position: absolute; top: -100px; left: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(49, 130, 206, 0.2) 0%, rgba(0,0,0,0) 70%); border-radius: 50%; z-index: 1;"></div>
+        <div style="position: absolute; bottom: -200px; right: -100px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(159, 122, 234, 0.15) 0%, rgba(0,0,0,0) 70%); border-radius: 50%; z-index: 1;"></div>
+        
+        <div class="container" style="position: relative; z-index: 2;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;" class="hero-grid">
+                
+                <!-- Left: Content -->
+                <div style="text-align: left;">
+                    <div class="hero-badge" style="display: inline-block; margin-bottom: 25px;">Identify. Remediate. Retest. Secure.</div>
+                    <h1 class="hero-title" style="text-align: left; font-size: 3.8rem; margin-bottom: 20px;">OWASP Top 10 & VAPT Assessment<br><span class="highlight">for Web Applications</span></h1>
+                    <p class="hero-subtitle" style="text-align: left; max-width: 600px; margin-bottom: 35px; font-size: 1.15rem; color: #cbd5e0; line-height: 1.6;">Protect your web applications from critical security vulnerabilities with comprehensive OWASP Top 10 and VAPT assessments backed by detailed reporting, practical remediation guidance and retesting.</p>
+                    
+                    <div class="hero-ctas" style="display: flex; gap: 15px; margin-bottom: 40px; justify-content: flex-start;">
+                        <a href="#contact" class="btn btn-primary btn-large" style="padding: 16px 32px; box-shadow: 0 10px 25px rgba(49, 130, 206, 0.4);">Request a VAPT Assessment</a>
+                        <a href="#contact" class="btn btn-secondary btn-large" style="padding: 16px 32px;">Free Consultation</a>
+                    </div>
+                    
+                    <div class="hero-tags" style="justify-content: flex-start; gap: 15px;">
+                        <span style="background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">OWASP Top 10</span>
+                        <span style="background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">VAPT</span>
+                        <span style="background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">API Security</span>
+                    </div>
+                </div>
+
+                <!-- Right: Custom UI Graphic -->
+                <div class="hero-graphic" style="position: relative;">
+                    <!-- Glass Panel Background -->
+                    <div style="background: rgba(15, 20, 30, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 35px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative; overflow: hidden;">
+                        
+                        <!-- Header Bar -->
+                        <div style="display: flex; gap: 8px; margin-bottom: 30px; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+                            <div style="width: 12px; height: 12px; border-radius: 50%; background: #fc8181;"></div>
+                            <div style="width: 12px; height: 12px; border-radius: 50%; background: #f6e05e;"></div>
+                            <div style="width: 12px; height: 12px; border-radius: 50%; background: #68d391;"></div>
+                            <div style="margin-left: 15px; color: #a0aec0; font-family: monospace; font-size: 0.85rem;">target: production_env_v2</div>
+                        </div>
+
+                        <!-- Scanning Animation -->
+                        <div style="position: relative; padding-bottom: 25px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: #63b3ed; font-family: monospace; font-size: 0.95rem;">
+                                <span>Initiating Vulnerability Scan...</span>
+                                <span>[48%]</span>
+                            </div>
+                            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+                                <div style="width: 48%; height: 100%; background: linear-gradient(90deg, #3182ce, #63b3ed); box-shadow: 0 0 10px #3182ce;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Findings Feed -->
+                        <div style="display: flex; flex-direction: column; gap: 16px; font-family: monospace; font-size: 0.9rem; margin-top: 25px;">
+                            <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #68d391; padding: 14px; border-radius: 4px; display: flex; justify-content: space-between;">
+                                <span style="color: #cbd5e0;">[OK] Input Validation</span>
+                                <span style="color: #68d391;">SECURE</span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #fc8181; padding: 14px; border-radius: 4px; display: flex; justify-content: space-between;">
+                                <span style="color: #cbd5e0;">[A01] Broken Access Control</span>
+                                <span style="color: #fc8181;">VULNERABILITY FOUND</span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #f6e05e; padding: 14px; border-radius: 4px; display: flex; justify-content: space-between;">
+                                <span style="color: #cbd5e0;">[A05] Security Misconfiguration</span>
+                                <span style="color: #f6e05e;">WARNING</span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #68d391; padding: 14px; border-radius: 4px; display: flex; justify-content: space-between;">
+                                <span style="color: #cbd5e0;">[OK] Cryptographic Failures</span>
+                                <span style="color: #68d391;">SECURE</span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #68d391; padding: 14px; border-radius: 4px; display: flex; justify-content: space-between;">
+                                <span style="color: #cbd5e0;">[A03] Injection Prevention</span>
+                                <span style="color: #68d391;">SECURE</span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #68d391; padding: 14px; border-radius: 4px; display: flex; justify-content: space-between;">
+                                <span style="color: #cbd5e0;">[A07] Identification Failures</span>
+                                <span style="color: #68d391;">SECURE</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <!-- Floating Badge -->
+                    <div style="position: absolute; bottom: -20px; right: -20px; background: linear-gradient(135deg, #1a202c, #2d3748); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+                        <span style="font-size: 1.5rem; font-weight: 800; color: #fff;">100%</span>
+                        <span style="font-size: 0.6rem; color: #a0aec0; text-transform: uppercase; font-weight: bold;">Verified</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Trust/Value Section -->
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div class="grid-2 align-items-center">
+                <div>
+                    <h2 style="font-size: 2.8rem; color: #1a202c; margin-bottom: 25px; line-height: 1.2;">Is Your Web Application Ready for <span style="color: #e53e3e;">Real-World Threats?</span></h2>
+                    <p style="font-size: 1.15rem; color: #4a5568; margin-bottom: 20px; line-height: 1.7;">Modern web applications face security risks across authentication, authorization, input validation, APIs, session management and application configuration.</p>
+                    
+                    <div style="background: #fff; border-left: 5px solid #0056b3; padding: 25px; margin: 35px 0; box-shadow: 0 10px 25px rgba(0,0,0,0.05); font-style: italic; font-weight: 600; font-size: 1.15rem; color: #2d3748; border-radius: 0 8px 8px 0;">
+                        "A vulnerability that appears technical can become a serious business risk when exploited."
+                    </div>
+                    
+                    <p style="font-size: 1.15rem; color: #4a5568; line-height: 1.7;">CyberSec ITC India helps you move beyond vulnerability discovery. We assess your application, document security weaknesses, explain their potential impact, provide practical remediation recommendations and retest fixes to validate closure.</p>
+                </div>
+                
+                <div style="background: #fff; padding: 45px 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.08);">
+                    <h3 style="color: #1a202c; margin-bottom: 30px; text-align: center; font-size: 1.5rem;">Our End-to-End Approach</h3>
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div style="display: flex; align-items: center; background: #f8f9fa; padding: 18px 25px; border-radius: 12px; border: 1px solid #edf2f7; transition: transform 0.3s; cursor: default;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                            <span style="background: #0056b3; color: white; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-right: 20px; font-size: 1.1rem;">1</span>
+                            <span style="font-weight: 600; font-size: 1.15rem; color: #2d3748;">Identify</span>
+                        </div>
+                        <div style="display: flex; align-items: center; background: #f8f9fa; padding: 18px 25px; border-radius: 12px; border: 1px solid #edf2f7; transition: transform 0.3s; cursor: default;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                            <span style="background: #0056b3; color: white; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-right: 20px; font-size: 1.1rem;">2</span>
+                            <span style="font-weight: 600; font-size: 1.15rem; color: #2d3748;">Report</span>
+                        </div>
+                        <div style="display: flex; align-items: center; background: #fff5f5; padding: 18px 25px; border-radius: 12px; border: 1px solid #fed7d7; border-left: 5px solid #e53e3e; transition: transform 0.3s; cursor: default;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                            <span style="background: #e53e3e; color: white; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-right: 20px; font-size: 1.1rem;">3</span>
+                            <span style="font-weight: 600; font-size: 1.15rem; color: #c53030;">Remediate</span>
+                        </div>
+                        <div style="display: flex; align-items: center; background: #f8f9fa; padding: 18px 25px; border-radius: 12px; border: 1px solid #edf2f7; transition: transform 0.3s; cursor: default;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                            <span style="background: #0056b3; color: white; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-right: 20px; font-size: 1.1rem;">4</span>
+                            <span style="font-weight: 600; font-size: 1.15rem; color: #2d3748;">Retest & Validate</span>
+                        </div>
+                        <div style="display: flex; align-items: center; background: #f0fff4; padding: 18px 25px; border-radius: 12px; border: 1px solid #c6f6d5; transition: transform 0.3s; cursor: default;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                            <span style="background: #48bb78; color: white; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-right: 20px; font-size: 1.1rem;">✓</span>
+                            <span style="font-weight: 600; font-size: 1.15rem; color: #22543d;">Close</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Why CyberSec Section -->
+    <section class="section-padding" style="background-image: linear-gradient(rgba(15, 20, 30, 0.85), rgba(15, 20, 30, 0.95)), url('vapt.png'); background-size: cover; background-position: center; background-attachment: fixed; color: #fff;">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title" style="margin-bottom: 10px; color: #fff;">More Than Vulnerability Testing</h2>
+                <h3 style="color: #63b3ed; margin-bottom: 20px;">Your End-to-End VAPT Partner</h3>
+                <p style="max-width: 800px; margin: 0 auto 40px; font-size: 1.1rem; color: #e2e8f0;">A VAPT engagement should not end when vulnerabilities are identified.<br>CyberSec ITC India provides a structured assessment lifecycle designed to support your team from initial engagement through remediation validation.</p>
+            </div>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Comprehensive Security Assessment</h3>
+                    <p>Assess web applications against OWASP Top 10 risks, application security weaknesses and relevant penetration-testing scenarios.</p>
+                </div>
+                <div class="card">
+                    <h3>Detailed Security Reporting</h3>
+                    <p>Receive structured findings covering severity, risk rating, evidence, affected components, business/technical impact and remediation recommendations.</p>
+                </div>
+                <div class="card">
+                    <h3>Practical Remediation Guidance</h3>
+                    <p>We help your technical team understand what needs to be fixed, why it matters and how remediation can be approached.</p>
+                </div>
+                <div class="card">
+                    <h3>Retesting & Validation</h3>
+                    <p>After remediation, we retest identified vulnerabilities to verify whether the issues have been effectively resolved.</p>
+                </div>
+                <div class="card">
+                    <h3>Professional Documentation</h3>
+                    <p>Receive appropriate assessment documentation, including reports and applicable assessment completion or attestation documentation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Methodology Section -->
+    <section id="methodology" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title" style="margin-bottom: 10px;">Our End-to-End VAPT Methodology</h2>
+            <p class="text-center" style="margin-bottom: 50px; font-size: 1.15rem; color: #4a5568;">From initial requirements to final validation, every assessment follows a structured process.</p>
+            
+            <div class="timeline">
+                <div class="timeline-step">
+                    <h3>01 — Initial Engagement</h3>
+                    <p style="color: #4a5568;">We begin by understanding your business and security requirements.</p>
+                    <ul>
+                        <li>Requirement gathering</li>
+                        <li>Scope definition</li>
+                        <li>Application identification</li>
+                        <li>Proposal preparation</li>
+                        <li>Statement of Work</li>
+                        <li>Assessment planning</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-step">
+                    <h3>02 — Pre-Assessment</h3>
+                    <p style="color: #4a5568;">Before testing begins, we establish the technical and operational requirements.</p>
+                    <ul>
+                        <li>Application and API details</li>
+                        <li>Environment information</li>
+                        <li>Access requirements</li>
+                        <li>Testing prerequisites</li>
+                        <li>Rules of engagement</li>
+                        <li>Testing windows and restrictions</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-step">
+                    <h3>03 — Security Testing</h3>
+                    <p style="color: #4a5568;">Our assessment may include:</p>
+                    <ul>
+                        <li>OWASP Top 10 assessment</li>
+                        <li>Vulnerability assessment & Pen testing</li>
+                        <li>Authentication & Authorization testing</li>
+                        <li>Input validation & Session management</li>
+                        <li>API security testing</li>
+                        <li>Risk and severity assessment</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-step">
+                    <h3>04 — Assessment Reporting</h3>
+                    <p style="color: #4a5568;">Identified vulnerabilities are documented in a structured report. Each finding can include:</p>
+                    <ul>
+                        <li>Vulnerability description & Severity</li>
+                        <li>Risk rating & Business/Technical impact</li>
+                        <li>Affected component & Evidence</li>
+                        <li>Reproduction details & Recommended remediation</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-step">
+                    <h3>05 — Remediation Support</h3>
+                    <p style="color: #4a5568;">Our role does not end with the report. We provide practical recommendations that help technical teams understand, prioritize and address identified security weaknesses.</p>
+                </div>
+
+                <div class="timeline-step">
+                    <h3>06 — Retesting & Closure</h3>
+                    <p style="color: #4a5568;">Once remediation is completed, identified findings can be retested to validate the effectiveness of the fixes.</p>
+                    <p style="margin-top: 15px; font-weight: 600; color: #e53e3e; background: #fff5f5; padding: 10px; border-radius: 5px; text-align: center; border: 1px solid #fed7d7;">Identify → Report → Remediate → Retest → Validate → Close</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. OWASP Top 10 Section -->
+    <section id="owasp" class="section-padding" style="background-image: linear-gradient(rgba(15, 20, 30, 0.85), rgba(15, 20, 30, 0.95)), url('vapt1.png'); background-size: cover; background-position: center; background-attachment: fixed; color: #fff;">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title" style="margin-bottom: 10px; color: #fff;">OWASP Top 10 Assessment</h2>
+                <h3 style="color: #63b3ed;">Identify Critical Web Application Security Risks</h3>
+                <p style="margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto; font-size: 1.1rem; color: #e2e8f0;">Our OWASP Top 10 assessment helps organizations evaluate their applications against widely recognized categories of web application security risks.</p>
+            </div>
+            
+            <div class="owasp-grid">
+                <div class="owasp-card">
+                    <div class="owasp-badge">A01</div>
+                    <div class="owasp-content">
+                        <h4>Broken Access Control</h4>
+                        <p>Identify weaknesses that may allow users to access resources or functionality beyond their intended permissions.</p>
+                    </div>
+                </div>
+                <div class="owasp-card">
+                    <div class="owasp-badge">A02</div>
+                    <div class="owasp-content">
+                        <h4>Cryptographic Failures</h4>
+                        <p>Assess how sensitive information and cryptographic controls are handled.</p>
+                    </div>
+                </div>
+                <div class="owasp-card">
+                    <div class="owasp-badge">A03</div>
+                    <div class="owasp-content">
+                        <h4>Injection</h4>
+                        <p>Test for injection-related weaknesses that may allow unintended commands, queries or data manipulation.</p>
+                    </div>
+                </div>
+                <div class="owasp-card">
+                    <div class="owasp-badge">A04</div>
+                    <div class="owasp-content">
+                        <h4>Insecure Design</h4>
+                        <p>Evaluate security weaknesses arising from application design and security control deficiencies.</p>
+                    </div>
+                </div>
+                <div class="owasp-card">
+                    <div class="owasp-badge">A05</div>
+                    <div class="owasp-content">
+                        <h4>Security Misconfiguration</h4>
+                        <p>Identify insecure configurations, unnecessary exposure and application or server-level security weaknesses.</p>
+                    </div>
+                </div>
+                <div class="owasp-card">
+                    <div class="owasp-badge">A06</div>
+                    <div class="owasp-content">
+                        <h4>Vulnerable and Outdated Components</h4>
+                        <p>Identify potentially vulnerable or outdated libraries, frameworks and software components.</p>
+                    </div>
+                </div>
+                <div class="owasp-card">
+                    <div class="owasp-badge">A07</div>
+                    <div class="owasp-content">
+                        <h4>Identification & Authentication Failures</h4>
+                        <p>Assess authentication mechanisms, credential handling and related security controls.</p>
+                    </div>
+                </div>
+                <div class="owasp-card">
+                    <div class="owasp-badge">A08</div>
+                    <div class="owasp-content">
+                        <h4>Software & Data Integrity Failures</h4>
+                        <p>Evaluate risks associated with software updates, dependencies, code integrity and data integrity.</p>
+                    </div>
+                </div>
+                <div class="owasp-card">
+                    <div class="owasp-badge">A09</div>
+                    <div class="owasp-content">
+                        <h4>Security Logging & Monitoring Failures</h4>
+                        <p>Assess whether relevant security events are appropriately logged and monitored.</p>
+                    </div>
+                </div>
+                <div class="owasp-card">
+                    <div class="owasp-badge">A10</div>
+                    <div class="owasp-content">
+                        <h4>Server-Side Request Forgery (SSRF)</h4>
+                        <p>Assess application functionality that may allow unintended server-side requests to internal or external resources.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Testing Scope -->
+    <section class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">What We Can Assess</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Web Application VAPT</h3>
+                    <p>Identify security weaknesses across your web application's functionality, architecture and exposed attack surface.</p>
+                </div>
+                <div class="card">
+                    <h3>OWASP Top 10 Testing</h3>
+                    <p>Assess application security against the OWASP Top 10 risk categories.</p>
+                </div>
+                <div class="card">
+                    <h3>Authentication & Authorization Testing</h3>
+                    <p>Evaluate login mechanisms, credential handling, and assess access controls to ensure users cannot access resources beyond their privileges.</p>
+                </div>
+                <div class="card">
+                    <h3>Input Validation & Session Management</h3>
+                    <p>Test application inputs for injection risks and assess session handling and related application controls.</p>
+                </div>
+                <div class="card">
+                    <h3>API Security Testing</h3>
+                    <p>Where applicable, evaluate APIs for authentication, authorization, input validation and other security weaknesses.</p>
+                </div>
+                <div class="card">
+                    <h3>Vulnerability Assessment & Pen Testing</h3>
+                    <p>Identify and classify security vulnerabilities based on severity, and perform controlled security testing to identify exploitable weaknesses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Sample Finding Section -->
+    <section class="section-padding" style="background-image: linear-gradient(rgba(15, 20, 30, 0.85), rgba(15, 20, 30, 0.95)), url('vapt2.png'); background-size: cover; background-position: center; background-attachment: fixed; color: #fff;">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title" style="margin-bottom: 10px; color: #fff;">See What a VAPT Finding Looks Like</h2>
+                <h3 style="color: #63b3ed;">Professionally Documented. Clearly Explained. Actionable.</h3>
+                <p style="margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto; font-size: 1.1rem; color: #e2e8f0;">A VAPT report should not simply tell you that a vulnerability exists. It should help your technical team understand the risk and take appropriate action.</p>
+            </div>
+            
+            <div class="case-study-content" style="background: rgba(15, 20, 30, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 45px; border-radius: 16px; box-shadow: 0 25px 50px rgba(0,0,0,0.6); position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); border-top: 4px solid #e53e3e;">
+                <!-- Header part -->
+                <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 25px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px;">
+                    <div>
+                        <div style="font-size: 0.9rem; font-weight: 700; color: #fc8181; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; background: #fc8181; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #fc8181;"></span> Sample Finding — Redacted</div>
+                        <h3 style="color: #fff; font-size: 2.2rem; margin: 0; font-weight: 800; letter-spacing: -0.5px;">Broken Access Control</h3>
+                        <p style="color: #a0aec0; font-size: 1.05rem; margin-top: 12px; font-weight: 500;">Affected Component: <span style="background: rgba(255, 255, 255, 0.1); padding: 4px 10px; border-radius: 6px; font-family: monospace; color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.05);">[REDACTED]</span></p>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <span style="background: rgba(229, 62, 62, 0.15); color: #fc8181; border: 1px solid rgba(229, 62, 62, 0.4); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">Severity: High</span>
+                        <span style="background: rgba(221, 107, 32, 0.15); color: #fbd38d; border: 1px solid rgba(221, 107, 32, 0.4); padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">Risk: High</span>
+                    </div>
+                </div>
+                
+                <div class="grid-2" style="gap: 40px;">
+                    <div>
+                        <h4 style="color: #63b3ed; font-size: 1.25rem; margin-bottom: 15px; border-left: 3px solid #4299e1; padding-left: 15px; letter-spacing: 0.5px;">Business Impact</h4>
+                        <p style="color: #cbd5e0; font-size: 1.05rem; line-height: 1.7; margin-bottom: 35px;">An unauthorized user may potentially access functionality or resources outside their intended permissions, depending on the application's implementation.</p>
+                        
+                        <h4 style="color: #63b3ed; font-size: 1.25rem; margin-bottom: 15px; border-left: 3px solid #4299e1; padding-left: 15px; letter-spacing: 0.5px;">Technical Impact</h4>
+                        <p style="color: #cbd5e0; font-size: 1.05rem; line-height: 1.7;">Insufficient server-side authorization controls may allow unauthorized access to protected application resources.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #68d391; font-size: 1.25rem; margin-bottom: 15px; border-left: 3px solid #48bb78; padding-left: 15px; letter-spacing: 0.5px;">Recommended Remediation</h4>
+                        <p style="color: #cbd5e0; font-size: 1.05rem; line-height: 1.7; margin-bottom: 35px;">Implement robust server-side authorization checks for protected resources and ensure that access permissions are validated for every relevant request.</p>
+                        
+                        <h4 style="color: #e2e8f0; font-size: 1.25rem; margin-bottom: 15px; border-left: 3px solid #a0aec0; padding-left: 15px; letter-spacing: 0.5px;">Evidence</h4>
+                        <div style="background: rgba(0, 0, 0, 0.5); color: #a0aec0; padding: 20px; border-radius: 10px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: inset 0 4px 10px rgba(0,0,0,0.8);">
+                            <span style="color: #fc8181; font-weight: bold;">> GET /api/admin/users HTTP/1.1</span><br>
+                            > Host: [REDACTED]<br>
+                            > Cookie: session=user_session_token<br><br>
+                            <span style="color: #68d391; font-weight: bold;">&lt; HTTP/1.1 200 OK</span><br>
+                            &lt; Content-Type: application/json<br>
+                            &lt; {"data": "<span style="color: #fbd38d;">[REDACTED SENSITIVE INFO]</span>"}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-muted" style="margin-top: 20px;">All sample information displayed on this page should be appropriately anonymised and must not contain client credentials, IP addresses, confidential architecture details or security-sensitive information.</p>
+        </div>
+    </section>
+
+    <!-- 8 & 9. Remediation & Retesting -->
+    <section class="section-padding text-center">
+        <div class="container">
+            <h2 class="section-title" style="color: #1a202c; margin-bottom: 10px;">We Don't Stop at Finding Vulnerabilities</h2>
+            <h3 style="color: #4a5568; font-weight: normal; margin-bottom: 30px;">Practical Remediation Guidance for Your Technical Team</h3>
+            <p style="max-width: 800px; margin: 0 auto 40px; font-size: 1.1rem; color: #4a5568;">Identifying a vulnerability is only the first step. Our assessment findings are accompanied by practical recommendations designed to help your development, infrastructure and security teams understand the required remediation.</p>
+            
+            <div class="cycle-steps" style="margin-bottom: 50px;">
+                <div class="step" style="background: #fff; color: #0056b3; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">Understand</div>
+                <div class="arrow" style="color: #a0aec0;">&#8594;</div>
+                <div class="step" style="background: #fff; color: #0056b3; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">Prioritize</div>
+                <div class="arrow" style="color: #a0aec0;">&#8594;</div>
+                <div class="step" style="background: #fff; color: #0056b3; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">Remediate</div>
+                <div class="arrow" style="color: #a0aec0;">&#8594;</div>
+                <div class="step" style="background: #fff; color: #0056b3; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">Retest</div>
+                <div class="arrow" style="color: #a0aec0;">&#8594;</div>
+                <div class="step" style="background: #f0fff4; color: #2f855a; border: 1px solid #c6f6d5; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">Close</div>
+            </div>
+            
+            <h3 style="color: #38a169; font-size: 1.5rem; margin-bottom: 40px;">Find the risk. Fix the risk. Verify the fix.</h3>
+            
+            <div style="background: #f8f9fa; padding: 45px; border-radius: 12px; border: 1px solid #edf2f7; box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 900px; margin: 0 auto;">
+                <h3 style="color: #1a202c; margin-bottom: 15px; font-size: 1.8rem;">Retesting & Security Validation</h3>
+                <h4 style="color: #4a5568; margin-bottom: 25px; font-weight: normal; font-size: 1.2rem;">Because Fixing a Vulnerability Is Only Half the Job</h4>
+                <p style="color: #4a5568; font-size: 1.1rem; line-height: 1.7;">After remediation, our team can perform retesting to determine whether previously identified vulnerabilities have been adequately addressed. This structured approach helps organizations move from vulnerability discovery to validated remediation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. ICRA Case Study -->
+    <!-- 10. ICRA Case Study -->
+    <section class="section-padding" style="background-image: linear-gradient(rgba(15, 20, 30, 0.85), rgba(15, 20, 30, 0.95)), url('3v.png'); background-size: cover; background-position: center; background-attachment: fixed; color: #fff;">
+        <div class="container">
+            <div style="display: flex; flex-wrap: wrap; gap: 60px; max-width: 1100px; margin: 0 auto; text-align: left; align-items: flex-start;">
+                
+                <!-- Left Side: Content & Demonstrates -->
+                <div style="flex: 1; min-width: 300px;">
+                    <div style="display: inline-block; padding: 4px 12px; background: rgba(99, 179, 237, 0.15); border: 1px solid rgba(99, 179, 237, 0.3); color: #63b3ed; border-radius: 50px; font-size: 0.9rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;">Case Study</div>
+                    <h2 style="font-size: 2.5rem; color: #fff; margin-bottom: 15px; font-weight: 800; line-height: 1.2;">Recently Completed Assessment</h2>
+                    <h3 style="color: #63b3ed; font-weight: normal; margin-bottom: 30px; font-size: 1.3rem; line-height: 1.5;">OWASP Top 10 & VAPT Assessment for a Leading Organisation in Dubai</h3>
+                    
+                    <p style="color: #e2e8f0; font-size: 1.15rem; line-height: 1.7; margin-bottom: 15px;">CyberSec ITC India recently completed an OWASP Top 10 and VAPT assessment engagement for a leading organisation in Dubai.</p>
+                    <p style="color: #cbd5e0; font-size: 1.1rem; line-height: 1.7; margin-bottom: 40px;">The engagement included structured security testing, vulnerability identification, detailed reporting, remediation recommendations and retesting.</p>
+
+                    <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 20px;">What This Demonstrates</h4>
+                    <ul style="list-style: none; padding: 0; color: #cbd5e0; font-size: 1.05rem; line-height: 1.8;">
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start;"><span style="color: #63b3ed; margin-right: 12px; font-size: 1.2rem;">✓</span> Structured security assessment methodology</li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start;"><span style="color: #63b3ed; margin-right: 12px; font-size: 1.2rem;">✓</span> Professional vulnerability documentation</li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start;"><span style="color: #63b3ed; margin-right: 12px; font-size: 1.2rem;">✓</span> Risk-based assessment approach</li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start;"><span style="color: #63b3ed; margin-right: 12px; font-size: 1.2rem;">✓</span> Practical remediation recommendations</li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start;"><span style="color: #63b3ed; margin-right: 12px; font-size: 1.2rem;">✓</span> Remediation validation through retesting</li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: flex-start;"><span style="color: #63b3ed; margin-right: 12px; font-size: 1.2rem;">✓</span> End-to-end assessment documentation</li>
+                    </ul>
+                </div>
+
+                <!-- Right Side: Vertical Timeline -->
+                <div style="flex: 0 0 350px; background: rgba(15, 20, 30, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+                    <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">Engagement Lifecycle</h4>
+                    
+                    <div style="position: relative; padding-left: 30px;">
+                        <!-- Vertical line -->
+                        <div style="position: absolute; left: 7px; top: 10px; bottom: 20px; width: 2px; background: rgba(255,255,255,0.1);"></div>
+                        
+                        <!-- Step 1 -->
+                        <div style="position: relative; margin-bottom: 35px;">
+                            <div style="position: absolute; left: -30px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #2d3748; border: 2px solid #63b3ed; box-shadow: 0 0 10px rgba(99, 179, 237, 0.5);"></div>
+                            <h5 style="color: #fff; font-size: 1.1rem; margin: 0 0 5px 0;">1. Planning</h5>
+                            <p style="color: #718096; font-size: 0.9rem; margin: 0;">Scope & rules of engagement</p>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div style="position: relative; margin-bottom: 35px;">
+                            <div style="position: absolute; left: -30px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #2d3748; border: 2px solid #63b3ed;"></div>
+                            <h5 style="color: #fff; font-size: 1.1rem; margin: 0 0 5px 0;">2. Testing</h5>
+                            <p style="color: #718096; font-size: 0.9rem; margin: 0;">Vulnerability identification</p>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div style="position: relative; margin-bottom: 35px;">
+                            <div style="position: absolute; left: -30px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #2d3748; border: 2px solid #63b3ed;"></div>
+                            <h5 style="color: #fff; font-size: 1.1rem; margin: 0 0 5px 0;">3. Reporting</h5>
+                            <p style="color: #718096; font-size: 0.9rem; margin: 0;">Detailed risk documentation</p>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div style="position: relative; margin-bottom: 35px;">
+                            <div style="position: absolute; left: -30px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #2d3748; border: 2px solid #63b3ed;"></div>
+                            <h5 style="color: #fff; font-size: 1.1rem; margin: 0 0 5px 0;">4. Remediation</h5>
+                            <p style="color: #718096; font-size: 0.9rem; margin: 0;">Practical fixing guidance</p>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div style="position: relative; margin-bottom: 35px;">
+                            <div style="position: absolute; left: -30px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #2d3748; border: 2px solid #63b3ed;"></div>
+                            <h5 style="color: #fff; font-size: 1.1rem; margin: 0 0 5px 0;">5. Retesting</h5>
+                            <p style="color: #718096; font-size: 0.9rem; margin: 0;">Verification of fixes applied</p>
+                        </div>
+
+                        <!-- Step 6 -->
+                        <div style="position: relative;">
+                            <div style="position: absolute; left: -30px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #48bb78; border: 2px solid #48bb78; box-shadow: 0 0 12px rgba(72, 187, 120, 0.8);"></div>
+                            <h5 style="color: #68d391; font-size: 1.1rem; margin: 0 0 5px 0;">6. Closure</h5>
+                            <p style="color: #718096; font-size: 0.9rem; margin: 0;">Final validation sign-off</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 60px; max-width: 800px; margin-left: auto; margin-right: auto; color: #718096; font-size: 0.95rem; line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; text-align: left;">
+                <span style="color: #a0aec0; font-weight: bold; display: block; margin-bottom: 10px;"><svg style="width: 18px; height: 18px; vertical-align: text-bottom; margin-right: 6px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> Protecting Client Confidentiality</span>
+                Any case-study material published on this page will be appropriately redacted and anonymised. Confidential information, credentials, IP addresses, application architecture, security-sensitive evidence and other restricted information will not be disclosed. Client name and engagement details will be published only with the necessary authorization.
+            </p>
+        </div>
+    </section>
+
+    <!-- 11. Deliverables Section -->
+    <section id="deliverables" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title text-center" style="margin-bottom: 10px;">What Do You Receive From a VAPT Engagement?</h2>
+            <h3 class="text-center" style="color: #4a5568; margin-bottom: 40px;">A Complete Assessment Package</h3>
+            <p class="text-center" style="margin-bottom: 40px; font-size: 1.1rem;">Our objective is to give your organization clear, useful and actionable security documentation.<br><strong>From proposal to final validation — every stage is professionally documented.</strong></p>
+            
+            <style>
+                .deliverable-card {
+                    background: #fff;
+                    padding: 30px;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+                    border: 1px solid #e2e8f0;
+                    border-top: 4px solid #fff;
+                    transition: all 0.3s ease;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                .deliverable-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+                    border-top: 4px solid #3182ce;
+                }
+                .deliverable-icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 50px;
+                    height: 50px;
+                    background: #ebf8ff;
+                    color: #3182ce;
+                    border-radius: 12px;
+                    margin-bottom: 20px;
+                }
+                .deliverable-card h3 {
+                    color: #1a202c;
+                    font-size: 1.15rem;
+                    margin-bottom: 12px;
+                    line-height: 1.4;
+                    font-weight: 700;
+                }
+                .deliverable-card p {
+                    color: #4a5568;
+                    font-size: 0.95rem;
+                    line-height: 1.6;
+                    margin: 0;
+                }
+            </style>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                <div class="deliverable-card">
+                    <div class="deliverable-icon">
+                        <svg style="width:26px; height:26px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h3>Assessment Proposal</h3>
+                    <p>Defined scope, objectives, approach and engagement requirements.</p>
+                </div>
+                
+                <div class="deliverable-card">
+                    <div class="deliverable-icon">
+                        <svg style="width:26px; height:26px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                    </div>
+                    <h3>Pre-Assessment Checklist</h3>
+                    <p>Required information, access requirements and testing prerequisites.</p>
+                </div>
+                
+                <div class="deliverable-card">
+                    <div class="deliverable-icon">
+                        <svg style="width:26px; height:26px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <h3>Testing Methodology</h3>
+                    <p>Documented approach and security testing scope.</p>
+                </div>
+                
+                <div class="deliverable-card">
+                    <div class="deliverable-icon">
+                        <svg style="width:26px; height:26px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    </div>
+                    <h3>Vulnerability Assessment Report</h3>
+                    <p>Detailed findings with severity, impact, evidence and affected components.</p>
+                </div>
+                
+                <div class="deliverable-card">
+                    <div class="deliverable-icon">
+                        <svg style="width:26px; height:26px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    </div>
+                    <h3>Remediation Recommendations</h3>
+                    <p>Practical guidance to help technical teams address identified findings.</p>
+                </div>
+                
+                <div class="deliverable-card">
+                    <div class="deliverable-icon">
+                        <svg style="width:26px; height:26px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    </div>
+                    <h3>Retesting Report</h3>
+                    <p>Documentation of remediation validation and retest results.</p>
+                </div>
+                
+                <div class="deliverable-card">
+                    <div class="deliverable-icon">
+                        <svg style="width:26px; height:26px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3>Final VAPT Report</h3>
+                    <p>Consolidated assessment results and final status of applicable findings.</p>
+                </div>
+                
+                <div class="deliverable-card">
+                    <div class="deliverable-icon">
+                        <svg style="width:26px; height:26px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                    </div>
+                    <h3>Assessment Completion / Attestation</h3>
+                    <p>Applicable assessment completion documentation, where included within the agreed scope.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. FAQ Section -->
+    <section class="section-padding" style="background-image: linear-gradient(rgba(15, 20, 30, 0.9), rgba(15, 20, 30, 0.95)), url('vappt.png'); background-size: cover; background-position: center; background-attachment: fixed; color: #fff;">
+        <div class="container">
+            <h2 class="section-title text-center" style="color: #fff; margin-bottom: 50px;">Frequently Asked Questions</h2>
+            <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; align-items: start;">
+                <details style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #63b3ed; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease;">
+                    <summary style="color: #fff; font-size: 1.2rem; font-weight: 600; outline: none;">What is VAPT?</summary>
+                    <p style="color: #a0aec0; font-size: 1.05rem; line-height: 1.6; margin: 15px 0 0 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">Vulnerability Assessment and Penetration Testing (VAPT) is a structured approach to identifying, assessing and validating security vulnerabilities in applications, systems or environments.</p>
+                </details>
+                
+                <details style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #63b3ed; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease;">
+                    <summary style="color: #fff; font-size: 1.2rem; font-weight: 600; outline: none;">What does an OWASP Top 10 assessment cover?</summary>
+                    <p style="color: #a0aec0; font-size: 1.05rem; line-height: 1.6; margin: 15px 0 0 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">An OWASP Top 10 assessment evaluates a web application against major categories of application security risks identified by OWASP.</p>
+                </details>
+                
+                <details style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #63b3ed; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease;">
+                    <summary style="color: #fff; font-size: 1.2rem; font-weight: 600; outline: none;">Do you provide remediation recommendations?</summary>
+                    <p style="color: #a0aec0; font-size: 1.05rem; line-height: 1.6; margin: 15px 0 0 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">Yes. Findings can include practical remediation recommendations to help technical teams understand and address identified vulnerabilities.</p>
+                </details>
+                
+                <details style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #63b3ed; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease;">
+                    <summary style="color: #fff; font-size: 1.2rem; font-weight: 600; outline: none;">Do you perform retesting?</summary>
+                    <p style="color: #a0aec0; font-size: 1.05rem; line-height: 1.6; margin: 15px 0 0 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">Yes. Retesting can be performed after remediation to validate whether previously identified vulnerabilities have been adequately addressed.</p>
+                </details>
+                
+                <details style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #63b3ed; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease;">
+                    <summary style="color: #fff; font-size: 1.2rem; font-weight: 600; outline: none;">Can you test APIs?</summary>
+                    <p style="color: #a0aec0; font-size: 1.05rem; line-height: 1.6; margin: 15px 0 0 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">Yes. API security testing can be included where applicable based on the agreed assessment scope.</p>
+                </details>
+                
+                <details style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #63b3ed; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease;">
+                    <summary style="color: #fff; font-size: 1.2rem; font-weight: 600; outline: none;">What will we receive after the assessment?</summary>
+                    <p style="color: #a0aec0; font-size: 1.05rem; line-height: 1.6; margin: 15px 0 0 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">Depending on the agreed scope, deliverables may include assessment documentation, vulnerability reports, remediation recommendations, retesting results and final assessment documentation.</p>
+                </details>
+                
+                <details style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #63b3ed; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease;">
+                    <summary style="color: #fff; font-size: 1.2rem; font-weight: 600; outline: none;">How long does a VAPT assessment take?</summary>
+                    <p style="color: #a0aec0; font-size: 1.05rem; line-height: 1.6; margin: 15px 0 0 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">The timeline depends on factors such as application size, scope, number of applications, testing requirements and access availability. The assessment timeline is finalized during the engagement planning stage.</p>
+                </details>
+                
+                <details style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #63b3ed; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease;">
+                    <summary style="color: #fff; font-size: 1.2rem; font-weight: 600; outline: none;">Can you provide a VAPT certificate?</summary>
+                    <p style="color: #a0aec0; font-size: 1.05rem; line-height: 1.6; margin: 15px 0 0 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">Assessment completion or attestation documentation may be provided where applicable and within the agreed engagement scope.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- 13. CTA Section & 14. Lead Form -->
+    <section id="contact" class="contact section-padding" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); position: relative; overflow: hidden;">
+        <!-- Subtle background decoration -->
+        <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(99,179,237,0.1) 0%, rgba(255,255,255,0) 70%); border-radius: 50%;"></div>
+        <div style="position: absolute; bottom: -100px; left: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(66,153,225,0.1) 0%, rgba(255,255,255,0) 70%); border-radius: 50%;"></div>
+
+        <div class="container" style="position: relative; z-index: 1;">
+            <div class="contact-wrapper grid-2" style="align-items: center; gap: 60px;">
+                <div class="contact-info">
+                    <div style="display: inline-block; padding: 6px 16px; background: #ebf8ff; color: #3182ce; border-radius: 50px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; border: 1px solid #bee3f8;">Ready to Secure Your App?</div>
+                    
+                    <h2 style="color: #1a202c; font-size: 2.8rem; line-height: 1.2; font-weight: 800; margin-bottom: 25px;">Is Your Web Application Secure?</h2>
+                    <p style="margin-bottom: 15px; color: #4a5568; font-size: 1.15rem; line-height: 1.6;">Don't wait until a vulnerability becomes a security incident.</p>
+                    <p style="color: #4a5568; font-size: 1.15rem; line-height: 1.6; margin-bottom: 40px;">Get a professional assessment of your web application and understand where your security risks exist.</p>
+                    
+                    <div style="background: #fff; padding: 30px; border-radius: 12px; border-left: 5px solid #3182ce; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
+                        <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                            <svg style="width: 24px; height: 24px; color: #3182ce; margin-right: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            <h3 style="margin: 0; color: #2d3748; font-size: 1.3rem;">Request a VAPT Assessment</h3>
+                        </div>
+                        <p style="margin: 0; color: #718096; line-height: 1.5;">Speak with our cybersecurity assessment team about your application, scope and security requirements.</p>
+                    </div>
+                    
+                    <div style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; background: #fff; padding: 15px 20px; border-radius: 50px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.02); justify-content: center;">
+                        <div style="display: flex; align-items: center; color: #2b6cb0; font-weight: 600; font-size: 0.9rem;">
+                            <svg style="width: 16px; height: 16px; margin-right: 5px; color: #48bb78;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            Web Application VAPT
+                        </div>
+                        <div style="width: 4px; height: 4px; background: #cbd5e0; border-radius: 50%;"></div>
+                        <div style="display: flex; align-items: center; color: #2b6cb0; font-weight: 600; font-size: 0.9rem;">
+                            <svg style="width: 16px; height: 16px; margin-right: 5px; color: #48bb78;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            OWASP Top 10
+                        </div>
+                        <div style="width: 4px; height: 4px; background: #cbd5e0; border-radius: 50%;"></div>
+                        <div style="display: flex; align-items: center; color: #2b6cb0; font-weight: 600; font-size: 0.9rem;">
+                            <svg style="width: 16px; height: 16px; margin-right: 5px; color: #48bb78;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            Penetration Testing
+                        </div>
+                        <div style="width: 4px; height: 4px; background: #cbd5e0; border-radius: 50%;"></div>
+                        <div style="display: flex; align-items: center; color: #2b6cb0; font-weight: 600; font-size: 0.9rem;">
+                            <svg style="width: 16px; height: 16px; margin-right: 5px; color: #48bb78;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            API Security
+                        </div>
+                    </div>
+                </div>
+                
+                <style>
+                    .premium-form-input {
+                        width: 100%;
+                        padding: 14px 16px;
+                        border: 1px solid #e2e8f0;
+                        border-radius: 8px;
+                        font-family: inherit;
+                        font-size: 0.95rem;
+                        color: #2d3748;
+                        background: #f8fafc;
+                        transition: all 0.3s ease;
+                        box-sizing: border-box;
+                    }
+                    .premium-form-input:focus {
+                        outline: none;
+                        border-color: #3182ce;
+                        background: #fff;
+                        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+                    }
+                    .premium-label {
+                        display: block;
+                        margin-bottom: 6px;
+                        font-weight: 600;
+                        color: #4a5568;
+                        font-size: 0.85rem;
+                    }
+                    .premium-submit {
+                        background: linear-gradient(135deg, #0056b3 0%, #3182ce 100%);
+                        color: #fff;
+                        border: none;
+                        padding: 16px;
+                        width: 100%;
+                        border-radius: 8px;
+                        font-size: 1.05rem;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: transform 0.2s, box-shadow 0.2s;
+                        box-shadow: 0 10px 20px rgba(49, 130, 206, 0.2);
+                        margin-top: 10px;
+                    }
+                    .premium-submit:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 15px 25px rgba(49, 130, 206, 0.3);
+                    }
+                </style>
+
+                <div style="background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.8);">
+                    <h3 style="margin-bottom: 8px; color: #1a202c; font-size: 1.6rem; font-weight: 700;">Request an Assessment</h3>
+                    <p style="margin-bottom: 30px; color: #718096; font-size: 0.95rem;">Tell us a little about your application. Our team will contact you to discuss your requirements.</p>
+                    
+                    <form id="vaptForm">
+                        <div class="form-group grid-2 gap-10">
+                            <div>
+                                <label class="premium-label">Name*</label>
+                                <input type="text" id="name" class="premium-form-input" placeholder="Enter your name" required>
+                            </div>
+                            <div>
+                                <label class="premium-label">Company Name*</label>
+                                <input type="text" id="company" class="premium-form-input" placeholder="Enter company name" required>
+                            </div>
+                        </div>
+                        <div class="form-group grid-2 gap-10">
+                            <div>
+                                <label class="premium-label">Business Email*</label>
+                                <input type="email" id="email" class="premium-form-input" placeholder="Enter business email" required>
+                            </div>
+                            <div>
+                                <label class="premium-label">Phone / WhatsApp*</label>
+                                <input type="tel" id="phone" class="premium-form-input" placeholder="Enter contact number" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="premium-label">Website / Application URL</label>
+                            <input type="url" id="website" class="premium-form-input" placeholder="Enter your website or application URL">
+                        </div>
+                        <div class="form-group grid-2 gap-10">
+                            <div>
+                                <label class="premium-label">Application Type*</label>
+                                <select id="appType" class="premium-form-input" required>
+                                    <option value="" disabled selected>Select application type</option>
+                                    <option value="web">Web Application</option>
+                                    <option value="api">API Only</option>
+                                    <option value="both">Web & API</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="premium-label">API Testing Required?</label>
+                                <select id="apiTesting" class="premium-form-input">
+                                    <option value="" disabled selected>Select option</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="Not Sure">Not Sure</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="premium-label">Approximate Scope</label>
+                            <textarea id="scope" class="premium-form-input" placeholder="Briefly describe your application or assessment requirements..." rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="premium-submit">Request a VAPT Assessment &rarr;</button>
+                        
+                        <p style="margin-top: 20px; font-size: 0.8rem; text-align: center; color: #a0aec0; line-height: 1.5;"><svg style="width: 14px; height: 14px; vertical-align: text-bottom; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> Please do not submit passwords, credentials, confidential security information or sensitive system details through this form.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background-color: #0f141e; color: #a0aec0; padding: 60px 0 20px;">
+        <div class="container">
+            <div class="grid-3" style="margin-bottom: 40px;">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <img src="itclogo.png" alt="ITC India Logo" style="height: 40px; filter: brightness(0) invert(1);">
+                        <div style="display: flex; flex-direction: column;">
+                            <span style="font-size: 1.3rem; font-weight: 800; color: #fff; line-height: 1.1; letter-spacing: -0.5px;">CyberSec</span>
+                            <span style="font-size: 0.7rem; font-weight: 600; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px;">IS Division of ITC INDIA</span>
+                        </div>
+                    </div>
+                    <p style="margin-bottom: 20px; font-size: 0.95rem;">Your end-to-end cybersecurity partner. We help organizations identify vulnerabilities, remediate risks, and validate security through comprehensive VAPT assessments.</p>
+                </div>
+                <div>
+                    <h4 style="color: #fff; margin-bottom: 15px; font-size: 1.1rem;">Quick Links</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 10px;"><a href="#methodology" style="color: #a0aec0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0aec0'">Our Methodology</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#owasp" style="color: #a0aec0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0aec0'">OWASP Top 10 Assessment</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#deliverables" style="color: #a0aec0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0aec0'">Deliverables</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#contact" style="color: #a0aec0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0aec0'">Request an Assessment</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: #fff; margin-bottom: 15px; font-size: 1.1rem;">Contact Us</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 10px;"><strong>Email:</strong> info@cybersec.itcindia.org</li>
+                        <li style="margin-bottom: 10px;"><strong>Phone:</strong> +91 [Insert Phone]</li>
+                        <li style="margin-bottom: 10px;"><strong>Location:</strong> India | Dubai</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; font-size: 0.9rem;">
+                <p>&copy; 2026 CyberSec ITC India. All rights reserved. <span style="margin: 0 10px;">|</span> <a href="#" style="color: #a0aec0; text-decoration: none;">Privacy Policy</a> <span style="margin: 0 10px;">|</span> <a href="#" style="color: #a0aec0; text-decoration: none;">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Buttons -->
+    <div style="position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 9999;">
+        <!-- Back to Top Button -->
+        <a href="#" id="backToTopBtn" style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background-color: #1a202c; color: white; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-decoration: none; opacity: 0; visibility: hidden; transition: all 0.3s ease; transform: translateY(20px); align-self: center;">
+            <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 15l7-7 7 7"></path></svg>
+        </a>
+        
+        <!-- WhatsApp Button -->
+        <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; background-color: #25D366; color: white; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-decoration: none; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <svg style="width: 35px; height: 35px;" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) {
+                    backToTopBtn.style.opacity = '1';
+                    backToTopBtn.style.visibility = 'visible';
+                    backToTopBtn.style.transform = 'translateY(0)';
+                } else {
+                    backToTopBtn.style.opacity = '0';
+                    backToTopBtn.style.visibility = 'hidden';
+                    backToTopBtn.style.transform = 'translateY(20px)';
+                }
+            });
+            backToTopBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
