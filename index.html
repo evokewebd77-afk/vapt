@@ -750,86 +750,120 @@
                 }
                 .testi-item {
                     background: #fff;
-                    border-radius: 16px;
-                    padding: 35px 20px 25px;
+                    border-radius: 20px;
+                    padding: 0;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    justify-content: center;
-                    gap: 18px;
-                    border: 1px solid #e2e8f0;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-                    transition: all 0.4s ease;
+                    border: none;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                     position: relative;
                     overflow: hidden;
+                    cursor: default;
                 }
                 .testi-item::before {
                     content: '';
                     position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    height: 3px;
-                    background: linear-gradient(90deg, #3182ce, #63b3ed);
-                    opacity: 0;
-                    transition: opacity 0.4s ease;
+                    top: 0; left: 0; right: 0;
+                    height: 4px;
+                    transition: height 0.4s ease;
                 }
+                .testi-item:nth-child(1)::before { background: linear-gradient(90deg, #667eea, #764ba2); }
+                .testi-item:nth-child(2)::before { background: linear-gradient(90deg, #f093fb, #f5576c); }
+                .testi-item:nth-child(3)::before { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+                .testi-item:nth-child(4)::before { background: linear-gradient(90deg, #43e97b, #38f9d7); }
+                .testi-item:nth-child(5)::before { background: linear-gradient(90deg, #fa709a, #fee140); }
                 .testi-item:hover {
-                    transform: translateY(-6px);
-                    border-color: #bee3f8;
-                    box-shadow: 0 20px 40px rgba(49,130,206,0.12);
+                    transform: translateY(-10px) scale(1.02);
+                    box-shadow: 0 25px 50px rgba(0,0,0,0.12);
                 }
                 .testi-item:hover::before {
-                    opacity: 1;
+                    height: 6px;
                 }
                 .testi-item .logo-wrap {
-                    background: #f7fafc;
-                    border-radius: 12px;
-                    padding: 18px 22px;
+                    padding: 30px 20px 20px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    min-height: 80px;
+                    min-height: 100px;
                     width: 100%;
                 }
                 .testi-item .logo-wrap img {
-                    max-height: 60px;
-                    max-width: 140px;
-                    transition: transform 0.3s ease;
+                    max-height: 70px;
+                    max-width: 150px;
+                    transition: transform 0.4s ease;
+                    filter: grayscale(30%);
                 }
                 .testi-item:hover .logo-wrap img {
-                    transform: scale(1.05);
+                    transform: scale(1.1);
+                    filter: grayscale(0%);
                 }
                 .testi-item .testi-name {
                     font-size: 0.85rem;
                     font-weight: 600;
-                    color: #2d3748;
+                    color: #4a5568;
                     text-align: center;
-                    line-height: 1.4;
+                    line-height: 1.5;
                     letter-spacing: 0.3px;
+                    padding: 15px 18px 22px;
+                    width: 100%;
+                    border-top: 1px solid #f0f0f0;
+                    background: #fafbfc;
+                    border-radius: 0 0 20px 20px;
+                }
+                .testi-item .verified-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 4px;
+                    font-size: 0.7rem;
+                    color: #3182ce;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    margin-top: 6px;
+                }
+                .testi-item .verified-badge svg {
+                    width: 14px;
+                    height: 14px;
                 }
             </style>
 
             <div class="testi-grid">
                 <div class="testi-item">
                     <div class="logo-wrap"><img src="SFT.png" alt="SFT Logo"></div>
-                    <span class="testi-name">Sustainable Futuristic Training</span>
+                    <div class="testi-name">
+                        Sustainable Futuristic Training
+                        <div class="verified-badge"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg> Verified</div>
+                    </div>
                 </div>
                 <div class="testi-item">
                     <div class="logo-wrap"><img src="ICRA.png" alt="ICRA Logo"></div>
-                    <span class="testi-name">Independent Credit Rating, Credit Research & Risk Assessment</span>
+                    <div class="testi-name">
+                        Independent Credit Rating, Credit Research & Risk Assessment
+                        <div class="verified-badge"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg> Verified</div>
+                    </div>
                 </div>
                 <div class="testi-item">
                     <div class="logo-wrap"><img src="EVOKE.png" alt="EVOKE Logo"></div>
-                    <span class="testi-name">Evoke AI</span>
+                    <div class="testi-name">
+                        Evoke AI
+                        <div class="verified-badge"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg> Verified</div>
+                    </div>
                 </div>
                 <div class="testi-item">
                     <div class="logo-wrap"><img src="EUROTECH.png" alt="EUROTECH Logo"></div>
-                    <span class="testi-name">euroTECH</span>
+                    <div class="testi-name">
+                        euroTECH
+                        <div class="verified-badge"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg> Verified</div>
+                    </div>
                 </div>
                 <div class="testi-item">
                     <div class="logo-wrap"><img src="EUROCERT.webp" alt="EUROCERT Logo"></div>
-                    <span class="testi-name">Eurocert</span>
+                    <div class="testi-name">
+                        Eurocert
+                        <div class="verified-badge"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg> Verified</div>
+                    </div>
                 </div>
             </div>
         </div>
