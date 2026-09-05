@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
 
             // Google Apps Script Web App URL
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbyVQqpnhiz6-1dfCn3j-7dPIg90mXpiJ5V9dqVpkVRB-Xffnb-bBkD3FQH8z-fCCl9I/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbynUbo09143-mDwTujcLwbOihU1lNMu6nDNyqos5hV1ImBJrlr-Z9fe1QptWneJOhi4/exec';
 
             const formData = new FormData();
             formData.append('name', document.getElementById('name').value);
