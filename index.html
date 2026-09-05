@@ -727,80 +727,108 @@
     </section>
 
     <!-- Our Testimonials Section -->
-    <section class="section-padding" style="padding-top: 80px; padding-bottom: 80px; background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 50%, #e2e8f0 100%);">
+    <section class="section-padding" style="padding-top: 80px; padding-bottom: 80px; background: #0f141e;">
         <div class="container text-center">
-            <div style="display: inline-block; padding: 6px 16px; background: #ebf8ff; color: #3182ce; border-radius: 50px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; border: 1px solid #bee3f8;">Trusted Partners</div>
-            <h2 class="section-title text-center" style="letter-spacing: 2px; color: #1a202c; margin-bottom: 15px; font-weight: 800;">Our Testimonials</h2>
-            <p style="color: #718096; font-size: 1.1rem; margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto;">Organizations that have trusted us with their security assessments and vulnerability testing.</p>
+            <div style="display: inline-block; padding: 6px 16px; background: rgba(49,130,206,0.15); color: #63b3ed; border-radius: 50px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; border: 1px solid rgba(99,179,237,0.3);">Trusted Partners</div>
+            <h2 class="section-title text-center" style="letter-spacing: 2px; color: #fff; margin-bottom: 15px; font-weight: 800;">Our Testimonials</h2>
+            <p style="color: #a0aec0; font-size: 1.1rem; margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto;">Organizations that have trusted us with their security assessments and vulnerability testing.</p>
             
             <style>
-                .testimonial-card {
+                .testi-grid {
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr);
+                    gap: 25px;
+                }
+                @media (max-width: 1100px) {
+                    .testi-grid { grid-template-columns: repeat(3, 1fr); }
+                }
+                @media (max-width: 768px) {
+                    .testi-grid { grid-template-columns: repeat(2, 1fr); }
+                }
+                @media (max-width: 480px) {
+                    .testi-grid { grid-template-columns: 1fr; }
+                }
+                .testi-item {
+                    background: linear-gradient(145deg, #1a202c, #2d3748);
+                    border-radius: 16px;
+                    padding: 35px 20px 25px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    gap: 15px;
+                    gap: 18px;
+                    border: 1px solid rgba(255,255,255,0.06);
+                    transition: all 0.4s ease;
+                    position: relative;
+                    overflow: hidden;
+                }
+                .testi-item::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 3px;
+                    background: linear-gradient(90deg, #3182ce, #63b3ed);
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
+                }
+                .testi-item:hover {
+                    transform: translateY(-6px);
+                    border-color: rgba(99,179,237,0.2);
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(49,130,206,0.08);
+                }
+                .testi-item:hover::before {
+                    opacity: 1;
+                }
+                .testi-item .logo-wrap {
                     background: #fff;
-                    padding: 30px 25px;
-                    border-radius: 16px;
-                    border: 1px solid #e2e8f0;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-                    transition: all 0.3s ease;
-                    min-width: 160px;
-                    cursor: default;
+                    border-radius: 12px;
+                    padding: 18px 22px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 80px;
+                    width: 100%;
                 }
-                .testimonial-card:hover {
-                    transform: translateY(-8px);
-                    box-shadow: 0 20px 40px rgba(49, 130, 206, 0.12);
-                    border-color: #bee3f8;
-                }
-                .testimonial-card img {
-                    max-height: 80px;
-                    max-width: 180px;
+                .testi-item .logo-wrap img {
+                    max-height: 60px;
+                    max-width: 140px;
                     transition: transform 0.3s ease;
                 }
-                .testimonial-card:hover img {
-                    transform: scale(1.08);
+                .testi-item:hover .logo-wrap img {
+                    transform: scale(1.05);
                 }
-                .testimonial-card span {
-                    font-size: 0.95rem;
-                    font-weight: 700;
-                    color: #2d3748;
-                    letter-spacing: 0.5px;
-                    padding-top: 8px;
-                    border-top: 2px solid #ebf8ff;
-                    width: 100%;
+                .testi-item .testi-name {
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                    color: #a0aec0;
                     text-align: center;
-                }
-                .testimonials-grid {
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                    align-items: stretch;
-                    gap: 30px;
+                    line-height: 1.4;
+                    letter-spacing: 0.3px;
                 }
             </style>
 
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <img src="SFT.png" alt="SFT Logo">
-                    <span>Sustainable Futuristic Training</span>
+            <div class="testi-grid">
+                <div class="testi-item">
+                    <div class="logo-wrap"><img src="SFT.png" alt="SFT Logo"></div>
+                    <span class="testi-name">Sustainable Futuristic Training</span>
                 </div>
-                <div class="testimonial-card">
-                    <img src="ICRA.png" alt="ICRA Logo">
-                    <span>Independent Credit Rating, Credit Research and Risk Assessment</span>
+                <div class="testi-item">
+                    <div class="logo-wrap"><img src="ICRA.png" alt="ICRA Logo"></div>
+                    <span class="testi-name">Independent Credit Rating, Credit Research & Risk Assessment</span>
                 </div>
-                <div class="testimonial-card">
-                    <img src="EVOKE.png" alt="EVOKE Logo">
-                    <span>Evoke AI</span>
+                <div class="testi-item">
+                    <div class="logo-wrap"><img src="EVOKE.png" alt="EVOKE Logo"></div>
+                    <span class="testi-name">Evoke AI</span>
                 </div>
-                <div class="testimonial-card">
-                    <img src="EUROTECH.png" alt="EUROTECH Logo">
-                    <span>euroTECH</span>
+                <div class="testi-item">
+                    <div class="logo-wrap"><img src="EUROTECH.png" alt="EUROTECH Logo"></div>
+                    <span class="testi-name">euroTECH</span>
                 </div>
-                <div class="testimonial-card">
-                    <img src="EUROCERT.webp" alt="EUROCERT Logo">
-                    <span>Eurocert</span>
+                <div class="testi-item">
+                    <div class="logo-wrap"><img src="EUROCERT.webp" alt="EUROCERT Logo"></div>
+                    <span class="testi-name">Eurocert</span>
                 </div>
             </div>
         </div>
