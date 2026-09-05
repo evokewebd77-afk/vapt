@@ -26,32 +26,52 @@ document.addEventListener('DOMContentLoaded', () => {
         vaptForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Here you would typically gather the form data and send it to your server/CRM via fetch or XMLHttpRequest
-            // Example data gathering:
-            const formData = {
-                name: document.getElementById('name').value,
-                company: document.getElementById('company').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                website: document.getElementById('website').value,
-                appType: document.getElementById('appType').value,
-                apiTesting: document.querySelector('input[name="apiTesting"]:checked')?.value || 'No'
-            };
+            // Replace this URL with your published Google Apps Script Web App URL
+            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
 
-            // Log data for demonstration purposes
-            console.log('Form submission data:', formData);
-
-            // Simulate API call and success response
-            vaptForm.style.display = 'none';
-            formSuccess.classList.remove('hidden');
+            const formData = new FormData();
+            formData.append('name', document.getElementById('name').value);
+            formData.append('company', document.getElementById('company').value);
+            formData.append('email', document.getElementById('email').value);
+            formData.append('phone', document.getElementById('phone').value);
+            formData.append('website', document.getElementById('website').value);
+            formData.append('appType', document.getElementById('appType').value);
             
-            // Optional: Send data to Google Analytics/Tag Manager for conversion tracking
-            if (typeof gtag === 'function') {
-                gtag('event', 'generate_lead', {
-                    'event_category': 'form',
-                    'event_label': 'VAPT_Assessment_Request'
+            const apiSelect = document.getElementById('apiTesting');
+            formData.append('apiTesting', apiSelect ? apiSelect.value : '');
+            
+            const scopeSelect = document.getElementById('scope');
+            formData.append('scope', scopeSelect ? scopeSelect.value : '');
+
+            // Change button text to indicate loading
+            const submitBtn = vaptForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Submitting...';
+            submitBtn.disabled = true;
+
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => {
+                    console.log('Success!', response);
+                    
+                    // Show success message
+                    vaptForm.style.display = 'none';
+                    if (formSuccess) formSuccess.classList.remove('hidden');
+                    else alert("Form submitted successfully!");
+                    
+                    // Optional: Google Analytics tracking
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'generate_lead', {
+                            'event_category': 'form',
+                            'event_label': 'VAPT_Assessment_Request'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert("There was an error submitting the form. Please try again.");
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
                 });
-            }
         });
     }
 });
