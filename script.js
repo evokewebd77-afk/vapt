@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         vaptForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Replace this URL with your published Google Apps Script Web App URL
-            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+            // Google Apps Script Web App URL
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzX-pslzkq-matWT_wR8hJrUw9CZG4n7HXgo6rxPlhOhHholXv5GQMkNrPlshaUc0S9/exec';
 
             const formData = new FormData();
             formData.append('name', document.getElementById('name').value);
