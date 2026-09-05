@@ -53,10 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => {
                     console.log('Success!', response);
                     
-                    // Show success message
+                    // Show success modal
                     vaptForm.style.display = 'none';
-                    if (formSuccess) formSuccess.classList.remove('hidden');
-                    else alert("Form submitted successfully!");
+                    const successPopup = document.getElementById('successPopup');
+                    if (successPopup) {
+                        successPopup.style.display = 'flex';
+                    } else {
+                        alert("FORM SUBMITTED SUCCESSFULLY");
+                    }
                     
                     // Optional: Google Analytics tracking
                     if (typeof gtag === 'function') {
