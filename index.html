@@ -724,21 +724,53 @@
                 </div>
             </div>
             
-            <div style="margin-top: 50px; text-align: center;">
-                <h3 style="color: #fff; margin-bottom: 15px; font-size: 1.5rem; font-weight: 700;">Sample Certificate of Completion</h3>
-                <div style="display: inline-block; max-width: 650px; width: 100%; padding: 10px; background: #fff; border-radius: 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.8); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                    <a href="certificate.jpg" target="_blank" title="Click to view full certificate" style="display: block; text-decoration: none;">
-                        <img src="certificate.jpg" alt="Sample VAPT Certificate" style="width: 100%; height: auto; border-radius: 8px; display: block; object-fit: contain;">
-                        <span style="display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 0.85rem; font-weight: 600; color: #3182ce;">
-                            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
-                            Click to view full size certificate
-                        </span>
-                    </a>
+            <div style="margin-top: 35px; text-align: center;">
+                <h3 style="color: #fff; margin-bottom: 12px; font-size: 1.3rem; font-weight: 700;">Sample Certificate of Completion</h3>
+                
+                <!-- Small Clickable Thumbnail Card -->
+                <div onclick="openCertModal()" style="display: inline-block; cursor: pointer; padding: 8px; background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.25); border: 2px solid rgba(255,255,255,0.9); transition: all 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 15px 30px rgba(49,130,206,0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.25)';">
+                    <div style="position: relative; overflow: hidden; border-radius: 6px;">
+                        <img src="certificate.jpg" alt="Sample VAPT Certificate" style="max-height: 200px; width: auto; max-width: 100%; display: block; object-fit: contain;">
+                        <div style="position: absolute; inset: 0; background: rgba(15,23,42,0.35); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(2px);" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'">
+                            <svg style="width: 28px; height: 28px; margin-bottom: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+                            <span style="font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px;">Click for Full Size</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.8rem; font-weight: 600; color: #3182ce;">
+                        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        Click to view full certificate
+                    </div>
                 </div>
-                <p style="color: #e2e8f0; margin-top: 15px; font-size: 0.95rem; max-width: 600px; margin-left: auto; margin-right: auto;">A verifiable certificate is issued upon successful completion of the assessment and remediation validation.</p>
+                
+                <p style="color: #e2e8f0; margin-top: 12px; font-size: 0.9rem; max-width: 550px; margin-left: auto; margin-right: auto;">Issued upon successful completion of the assessment and remediation validation.</p>
             </div>
         </div>
     </section>
+
+    <!-- Certificate Fullsize Modal Lightbox -->
+    <div id="certModal" onclick="closeCertModal()" style="display: none; position: fixed; inset: 0; z-index: 99999; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;">
+        <div onclick="event.stopPropagation()" style="position: relative; max-width: 90vw; max-height: 90vh; background: #fff; padding: 12px; border-radius: 16px; box-shadow: 0 25px 60px rgba(0,0,0,0.6); display: flex; flex-direction: column; align-items: center;">
+            <button onclick="closeCertModal()" style="position: absolute; top: -15px; right: -15px; width: 38px; height: 38px; border-radius: 50%; background: #3182ce; color: #fff; border: 2px solid #fff; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">&times;</button>
+            <img src="certificate.jpg" alt="Full Size VAPT Certificate" style="max-width: 85vw; max-height: 80vh; object-fit: contain; border-radius: 8px; display: block;">
+        </div>
+    </div>
+
+    <script>
+        function openCertModal() {
+            var modal = document.getElementById('certModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        function closeCertModal() {
+            var modal = document.getElementById('certModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+    </script>
 
     <!-- Our Testimonials Section -->
     <section class="section-padding" style="padding-top: 80px; padding-bottom: 80px; background: #f7fafc;">
